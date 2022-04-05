@@ -1,0 +1,240 @@
+.POST{
+  padding: 50px;
+}
+
+
+.content {
+  padding: 20px;
+  box-sizing: border-box;
+  height: calc(100vh - 140px);
+  padding-right: 10px;
+}
+.content_box {
+  box-sizing: border-box;
+  height: calc(100vh - 140px);
+  overflow-y: scroll;
+  background: #fff;
+  box-shadow: 0px 0px;
+}
+
+.nice_scroll {
+  overflow-y: scroll;
+}
+
+.nice_scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.nice_scroll::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+.nice_scroll::-webkit-scrollbar-thumb {
+  background: #222;
+}
+.page_title {
+  padding: 0px 15px;
+  font-size: 18px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid #eee;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  position: sticky;
+  left: 0px;
+  top: 0px;
+  background: #fff;
+  z-index: 1000;
+}
+
+.admin_page {
+  display: flex;
+  padding: 0px 10px;
+}
+
+.admin_page .box {
+  width: calc(33.33% - 0px);
+  padding: 0px 20px;
+}
+
+.sec_title {
+  font-size: 18px;
+
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+.act_btn{
+  display: flex;
+  margin-bottom: 40px;
+}
+.act_btn .act_row{
+  display: flex;
+  width: 220px;
+  margin-top: 10px;
+}
+.align{
+  text-align: end;
+}
+.inputWrap {
+  padding: 10px;
+}
+.inputBox {
+  line-height: 38px;
+  font-weight: 400;
+  margin-right: 20px;
+}
+.inputBox .lbl {
+  font-size: 14px;
+  line-height: 14px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.inputBox input {
+  width: 12%;
+  outline: none;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  height: 35px;
+  box-sizing: border-box;
+  padding: 0px 9px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.inputBox select {
+  width: 30%;
+  outline: none;
+  border: 1px solid #ccc;
+  height: 35px;
+  box-sizing: border-box;
+  padding: 0px 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.inputBox_Button {
+  /* display: flex; */
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+}
+
+.required_input {
+  width: 12px;
+  height: 12px;
+  background: url("https://tpointdevstorage.blob.core.windows.net/basedevpubliccontainer/1641488825062.svg")
+    no-repeat bottom center;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+p {
+  font-size: 16px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.btn {
+  font-size: 14px;
+  line-height: 14px;
+  background: #eee;
+  height: 35px;
+  align-items: center;
+  display: flex;
+  padding: 0px 15px;
+  color: #fff;
+  cursor: pointer;
+
+  box-shadow: 1px 1px 2px #000;
+}
+.btn.primary {
+  background: #519bff;
+}
+.btn.primary:hover {
+  background: #000e55;
+}
+
+.act_list {
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  padding-left: 0px;
+  height: 177px;
+  overflow-y: auto;
+}
+.act_list li {
+  list-style: none;
+  height: 35px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  padding-right: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+.act_list li svg:hover {
+  cursor: pointer;
+}
+.act_list li svg path {
+  fill: #3d3d3d;
+}
+.act_list li svg:hover path {
+  fill: #ff8a00;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .content {
+    height: calc(100vh - 50px);
+    padding: 10px;
+  }
+  .content_box {
+    height: calc(100vh - 70px);
+  }
+  .admin_page {
+    display: block;
+    padding: 0px 0px;
+  }
+
+  .admin_page .box {
+    width: 100%;
+    padding: 0px 10px;
+  }
+  .sec_title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .content {
+    height: calc(100vh - 50px);
+    padding: 10px;
+  }
+  .content_box {
+    height: calc(100vh - 70px);
+  }
+  .admin_page {
+    display: block;
+    padding: 0px 0px;
+  }
+
+  .admin_page .box {
+    width: 100%;
+    padding: 0px 10px;
+  }
+  .sec_title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .content {
+    height: calc(100vh - 70px);
+    padding: 10px;
+  }
+  .content_box {
+    height: calc(100vh - 70px);
+  }
+}
