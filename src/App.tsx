@@ -7,14 +7,14 @@ import { ICustomCompView, ICustomField } from "./interfaces";
 import Loader from "./components/Loader";
 import ViewTree from "./ViewTree";
 import { parse, stringify, toJSON, fromJSON } from "flatted";
-import { ToastContainer, Slide, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Slide, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ArrowDown from "./icons/ArrowDown";
+import ArrowUp from "./icons/ArrowUp";
 
-const configJson: any = (window.parent.window as any)["customConfig"] || {};
+let configJson: any = (window.parent.window as any)["customConfig"] || {};
 
-interface IProps {
-  uid: string;
-}
+interface IProps {}
 
 const CONST_INPUT_TYPE = {
   ALIAS: "alias",
@@ -43,27 +43,36 @@ const CONST_OPERATOR = [
   { label: "Contains", value: "Contains" },
 ];
 
-const App: FC<IProps> = ({ uid }) => {
-  const [config, setConfig] = useState<any | undefined>();
+const App: FC<IProps> = () => {
+  const [config, setConfig] = useState<ICustomCompView | undefined>();
   const [data, setData] = useState<ICustomCompView[]>([]);
-  const [component, setComponent] = useState<ICustomCompView | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isCompSelected, setIsCompSelected] = useState("component");
   const [selected, setSelected] = useState("");
+  const [isExpandTable, setIsExpandTable] = useState(false);
+
+  const onExpandTable = () => {
+    setIsExpandTable(isExpandTable ? false : true);
+  };
 
   const loadConfig = () => {
     let config = (window.parent.window as any)["customConfig"];
     if (config) {
       config = JSON.parse(config);
-
-      let customComp: ICustomCompView = {
-        // _id: config._id,
-        Name: config.Name,
-        // DbProvider: config.DbProvider,
-        Fields: [...config.Fields],
-        Option: config.Option,
-      };
-      setComponent(customComp);
+      console.log('config',config);
+      if (typeof config === "object") {
+        let customComp: ICustomCompView = {
+          // _id: config._id,
+          Name: config.Name,
+          // DbProvider: config.DbProvider,
+          Fields: [...config.Fields],
+          Option: config.Option,
+        };
+        configJson = Object.assign({},customComp);
+        setConfig(customComp);
+        setIsCompSelected(config.Option);
+        setSelected(config.Name);
+      }
     }
   };
 
@@ -73,7 +82,7 @@ const App: FC<IProps> = ({ uid }) => {
 
   const onChangeComponent = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-    if (value !== "") {
+    // if (value !== "") {
       let item = data[+value];
       let customField: ICustomField[] = [];
       if (item.Fields && item.Fields.length > 0) {
@@ -92,35 +101,37 @@ const App: FC<IProps> = ({ uid }) => {
       let customComp: ICustomCompView = {
         // _id: item._id,
         Name: item.Name,
-        Option: "component",
+        Option: isCompSelected,
         // DbProvider: item.DbProvider,
         Fields: customField,
       };
       // console.log("customComp", customComp);
 
-      setComponent(customComp);
+      setConfig(customComp);
       setSelected(value);
-      Object.assign(configJson, customComp);
-    } else {
-      setComponent(null);
-      setSelected("");
-    }
+      configJson = Object.assign({},customComp);
+    // } else {
+    //   setConfig(undefined);
+    //   setSelected("");
+    // }
   };
 
   const onChangeAlias = (event: React.ChangeEvent<HTMLInputElement>, customField: ICustomField, index: number) => {
     const { value } = event.target;
-    if (value !== "") {
+    
+    // if (value !== "") {
       let cf: ICustomField = customField;
       cf.Alias = value;
-      if (component) {
-        let comp: ICustomCompView = { ...component };
+      if (config) {
+        let comp: ICustomCompView = { ...config };
         if (comp.Fields) {
           comp.Fields[index] = cf;
         }
-        setComponent(comp);
-        Object.assign(configJson, comp);
+        setConfig(comp);
+        // Object.assign(configJson, comp);
+        configJson = Object.assign({},comp);
       }
-    }
+    // }
   };
 
   const onChnageIsDisplay = (event: React.ChangeEvent<HTMLInputElement>, customField: ICustomField, index: number) => {
@@ -128,21 +139,22 @@ const App: FC<IProps> = ({ uid }) => {
 
     let cf: ICustomField = customField;
     cf.IsDisplay = checked;
-    if (component) {
-      let comp: ICustomCompView = { ...component };
+    if (config) {
+      let comp: ICustomCompView = { ...config };
       if (comp.Fields) {
         comp.Fields[index] = cf;
       }
-      setComponent(comp);
-      Object.assign(configJson, comp);
-      console.log("configJson", configJson);
+      setConfig(comp);
+      // Object.assign(configJson, comp);
+      configJson = Object.assign({},comp);
+      // console.log("configJson", configJson);
     }
   };
 
   const handleChangeOption = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setIsCompSelected(value);
-    setComponent(null);
+    setConfig(undefined);
     setSelected("");
   };
 
@@ -152,18 +164,19 @@ const App: FC<IProps> = ({ uid }) => {
     index: number
   ) => {
     const { value } = e.target;
-    if (value !== "") {
+    // if (value !== "") {
       let cf: ICustomField = customField;
       cf.Value = value;
-      if (component) {
-        let comp: ICustomCompView = { ...component };
+      if (config) {
+        let comp: ICustomCompView = { ...config };
         if (comp.Fields) {
           comp.Fields[index] = cf;
         }
-        setComponent(comp);
-        Object.assign(configJson, comp);
+        setConfig(comp);
+        // Object.assign(configJson, comp);
+        configJson = Object.assign({},comp);
       }
-    }
+    // }
   };
 
   const displayInputType = (row: ICustomField, index: number) => {
@@ -177,7 +190,7 @@ const App: FC<IProps> = ({ uid }) => {
         return (
           <select value={row.Value ? row.Value : ""} onChange={(e) => onChangeFieldInputType(e, row, index)}>
             <option>Select Dynamic Field</option>
-            {component?.Fields?.map((item: ICustomField, index: number) => {
+            {config?.Fields?.map((item: ICustomField, index: number) => {
               return (
                 <option key={"fieldItem" + index} value={item.Name}>
                   {item.Name}
@@ -208,13 +221,14 @@ const App: FC<IProps> = ({ uid }) => {
     if (value !== "") {
       let cf: ICustomField = customField;
       cf.Operator = value;
-      if (component) {
-        let comp: ICustomCompView = { ...component };
+      if (config) {
+        let comp: ICustomCompView = { ...config };
         if (comp.Fields) {
           comp.Fields[index] = cf;
         }
-        setComponent(comp);
-        Object.assign(configJson, comp);
+        setConfig(comp);
+        // Object.assign(configJson, comp);
+        configJson = Object.assign({},comp);
       }
     }
   };
@@ -224,40 +238,40 @@ const App: FC<IProps> = ({ uid }) => {
     if (value !== "") {
       let cf: ICustomField = customField;
       cf.Type = value;
-      if (component) {
-        let comp: ICustomCompView = { ...component };
+      if (config) {
+        let comp: ICustomCompView = { ...config };
         if (comp.Fields) {
           comp.Fields[index] = cf;
         }
-        setComponent(comp);
-        Object.assign(configJson, comp);
+        setConfig(comp);
+        // Object.assign(configJson, comp);
+        configJson = Object.assign({},comp);
       }
     }
   };
 
-  const createTree = (comp: ViewTree,arr: any) => {
+  const createTree = (comp: ViewTree, arr: any) => {
     // console.log('comp',comp);
-    
+
     comp.children &&
       comp.children.map((item: ViewTree) => {
         if (item.SelFields && item.SelFields?.length > 0) {
-          console.log('item.SelFields',item.SelFields);
-          
+          // console.log('item.SelFields',item.SelFields);
+
           item.SelFields.forEach((item) => {
             arr.push(item);
           });
         }
-        createTree(item,arr);
+        createTree(item, arr);
       });
-
   };
 
   const formatViewData = (data: any) => {
     let updatedData: any = [];
     data.forEach((item: any) => {
       if (item.Tree) {
-        let fields :any= [];
-        createTree(parse(item.Tree),fields);
+        let fields: any = [];
+        createTree(parse(item.Tree), fields);
         updatedData.push({
           Name: item.Name,
           Fields: fields,
@@ -290,7 +304,7 @@ const App: FC<IProps> = ({ uid }) => {
             setData(compList.Success);
             setLoading(false);
           } else {
-            toast.error('Something went wrong!');
+            toast.error("Something went wrong!");
           }
         })
         .catch((error) => {
@@ -311,11 +325,11 @@ const App: FC<IProps> = ({ uid }) => {
             let data = compList.Success;
             let updatedData = formatViewData(data);
             // console.log('updatedData',updatedData);
-            
+
             setData(updatedData);
             setLoading(false);
           } else {
-            toast.error('Something went wrong!');
+            toast.error("Something went wrong!");
           }
         })
         .catch((error) => {
@@ -327,32 +341,31 @@ const App: FC<IProps> = ({ uid }) => {
     if (isCompSelected === "component") {
       setLoading(true);
       getCompList();
-      console.log("comp");
+      // console.log("comp");
     } else {
       setLoading(true);
       getViewList();
-      console.log("view");
+      // console.log("view");
     }
   }, [isCompSelected]);
 
-  console.log('component',component);
-  
+  console.log("config", config);
 
   return (
     <>
       <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            // pauseOnHover
-            transition={Slide}
-            theme={"colored"}
-        />
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        // pauseOnHover
+        transition={Slide}
+        theme={"colored"}
+      />
       {loading ? <Loader /> : null}
       <div className={styles.inputBox_Button}>
         <div className={styles.inputBox}>
@@ -376,11 +389,11 @@ const App: FC<IProps> = ({ uid }) => {
         </div>
         <div className={styles.inputBox}>
           <div className={styles.lbl}>Select {isCompSelected === "component" ? "Component" : "View"}</div>
-          <select name="component" value={selected} id="component" onChange={onChangeComponent}>
+          <select name="component" defaultValue={selected} id="component" onChange={onChangeComponent}>
             <option>--Select {isCompSelected === "component" ? "Component" : "View"}--</option>
             {data.map((item, index) => {
               return (
-                <option value={index} key={index}>
+                <option value={index} key={index} selected={config?.Name === item.Name ? true : false}>
                   {item.Name}
                 </option>
               );
@@ -388,14 +401,17 @@ const App: FC<IProps> = ({ uid }) => {
           </select>
         </div>
       </div>
-      <div className={`${tableStyle.my_table} ${tableStyle.transition}`}>
+      <div className={`${tableStyle.my_table}  ${isExpandTable ? tableStyle.transition : ""}`}>
         <div className={`${tableStyle.table} `}>
-          <div className={`${tableStyle.table_band}`}>
+          <div className={`${tableStyle.table_band}`} onClick={onExpandTable}>
             <div className={`${tableStyle.table_title}`}>{isCompSelected === "component" ? "Component" : "View"} Fields</div>
             {/* icon for Expand collaose table */}
             {/* <ExpandArrow /> */}
             {/* <CollapseArrow /> */}
             {/* <div className={`${tableStyle.table_btn} `}>Save</div> */}
+            <div className={`${tableStyle.tbl_icon} ${isExpandTable ? tableStyle.expand : tableStyle.collapse}`}>
+              {isExpandTable ? <ArrowDown /> : <ArrowUp />}
+            </div>
           </div>
 
           <div>
@@ -407,7 +423,7 @@ const App: FC<IProps> = ({ uid }) => {
               <div className={`${tableStyle.tbl_head} ${tableStyle.col_05} `}>Is Display</div>
             </div>
             <div className={`${tableStyle.new_row} ${tableStyle.nice_scroll}`}>
-              {component?.Fields?.map((item, index) => {
+              {config?.Fields?.map((item, index) => {
                 return (
                   <div className={`${tableStyle.row} `} key={index}>
                     <div className={`${tableStyle.type} ${tableStyle.col_01} `}>
@@ -415,12 +431,7 @@ const App: FC<IProps> = ({ uid }) => {
                       <div className={`${tableStyle.type} `}>{item.Name}</div>
                     </div>
                     <div className={`${tableStyle.types} ${tableStyle.col_02} `}>
-                      <input
-                        type="text"
-                        name="Alias"
-                        value={item.Alias ? item.Alias : ""}
-                        onChange={(event) => onChangeAlias(event, item, index)}
-                      />
+                      <input type="text" name="Alias" value={item.Alias ? item.Alias : ""} onChange={(event) => onChangeAlias(event, item, index)} />
                     </div>
                     {/* <div className={`${tableStyle.types} ${tableStyle.col_03} `}>---table name---</div> */}
                     <div className={`${tableStyle.typess} ${tableStyle.col_04} `}>
