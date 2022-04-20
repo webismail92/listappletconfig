@@ -1,0 +1,231 @@
+.my_table {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    position: fixed;
+    bottom: 0px;
+    height: 46px;
+    background: #fff;
+    transition: height 0.8s;
+}
+.my_table.transition {
+    height: 314.4px;
+}
+
+/* .table {
+  border-top: 1px solid #ccc;
+} */
+
+.tbl_band {
+    display: flex;
+    text-align: start;
+    padding: 7px 20px;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    background: #fff;
+    margin-top: -1px;
+    color: #aaa;
+}
+
+.col_01 {
+    width: 25%;
+}
+
+.col_02 {
+    width: 20%;
+}
+
+.col_03 {
+    width: 10%;
+}
+
+.col_04 {
+    width: 45%;
+}
+
+.col_05 {
+    width: 10%;
+}
+
+.col_06 {
+    width: 10%;
+}
+
+.tbl_head {
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.tbl_head:last-child {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: end;
+}
+
+.table .row {
+    display: flex;
+    text-align: start;
+    background: #fff;
+    padding: 8px 20px;
+    border-bottom: 1px solid #ccc;
+}
+.table .row:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+/* .table .row:last-child{
+    border-bottom: 0px solid #ccc;
+} */
+.number_row .row:last-child {
+    border-bottom: 0px solid #ccc;
+}
+
+.row .number_name {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.row .types {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 30px;
+    font-family: inherit;
+}
+
+.row .types input {
+    width: 60%;
+    font-size: 12px;
+    height: 24px;
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding: 0px 8px;
+}
+
+.row .typess input {
+    width: 30%;
+    font-size: 12px;
+    height: 24px;
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    padding: 0px 8px;
+}
+
+.row .typess select {
+    width: 30%;
+    font-size: 11px;
+    height: 24px;
+    outline: none;
+    box-sizing: border-box;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 4px;
+    padding: 0px 6px;
+}
+
+/* .type {
+
+} */
+
+.type .drag {
+    margin-top: 4px;
+    /* margin-right: 15px; */
+}
+
+.padding {
+    margin-left: 28px;
+    margin-right: -28px;
+}
+
+.type .types {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 30px;
+    font-family: inherit;
+}
+
+.row .types:last-child {
+    text-align: end;
+}
+
+.row .endtype:last-child {
+    text-align: end;
+}
+
+.row .endtype input {
+    width: 18px;
+    margin-top: 10px;
+}
+
+.comment {
+    display: flex;
+    margin-top: 10px;
+}
+
+.comment .txt1 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 10px;
+    width: 40px;
+}
+
+.nice_scroll {
+    overflow-y: scroll;
+    height: 235px;
+}
+
+.nice_scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.nice_scroll::-webkit-scrollbar-track {
+    background: #fff;
+    border: 0px solid #aaa;
+}
+
+.nice_scroll::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 3px;
+}
+
+.nice_scroll::-webkit-scrollbar-thumb:hover {
+    background: #ddd;
+}
+
+.MuiFormControlLabel-root {
+    height: 36px !important;
+}
+
+.table_band {
+    display: flex;
+    padding: 10px 20px;
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    justify-content: space-between;
+    cursor: pointer;
+    background: #e8e8e8;
+    justify-content: space-between;
+}
+.table_band svg{
+    margin-top: 5px;
+    cursor: pointer;
+}
+.table_band .table_title {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 500;
+}
+.table_band .table_btn {
+    width: auto;
+    border: 1px solid #ccc;
+    background: #6f6ee0;
+    padding: 0px 10px;
+    font-size: 14px;
+    color: #fff;
+    line-height: 17px;
+    cursor: pointer;
+}
