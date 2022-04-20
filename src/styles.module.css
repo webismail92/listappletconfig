@@ -1,7 +1,6 @@
-.POST{
+.POST {
   padding: 50px;
 }
-
 
 .content {
   padding: 20px;
@@ -66,16 +65,16 @@
   padding-left: 10px;
   margin-bottom: 10px;
 }
-.act_btn{
+.act_btn {
   display: flex;
   margin-bottom: 40px;
 }
-.act_btn .act_row{
+.act_btn .act_row {
   display: flex;
   width: 220px;
   margin-top: 10px;
 }
-.align{
+.align {
   text-align: end;
 }
 .inputWrap {
@@ -86,10 +85,18 @@
   font-weight: 400;
   margin-right: 20px;
 }
+.input_wrap {
+  display: flex;
+  padding: 20px;
+}
+.inputBox {
+  width: calc(25% - 30px);
+  margin: 0px 15px;
+}
 .inputBox .lbl {
   font-size: 14px;
   line-height: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   font-weight: 600;
 }
 .inputBox input {
@@ -97,17 +104,17 @@
   outline: none;
   border: 1px solid #ccc;
   background: #f7f7f7;
-  height: 35px;
+  height: 32px;
   box-sizing: border-box;
   padding: 0px 9px;
   font-size: 14px;
   font-weight: 500;
 }
 .inputBox select {
-  width: 30%;
+  width: 100%;
   outline: none;
   border: 1px solid #ccc;
-  height: 35px;
+  height: 32px;
   box-sizing: border-box;
   padding: 0px 5px;
   font-size: 14px;
@@ -124,8 +131,7 @@
 .required_input {
   width: 12px;
   height: 12px;
-  background: url("https://tpointdevstorage.blob.core.windows.net/basedevpubliccontainer/1641488825062.svg")
-    no-repeat bottom center;
+  background: url("https://tpointdevstorage.blob.core.windows.net/basedevpubliccontainer/1641488825062.svg") no-repeat bottom center;
   display: inline-block;
   margin-left: 5px;
 }
@@ -236,5 +242,13 @@ p {
   }
   .content_box {
     height: calc(100vh - 70px);
+  }
+  .input_wrap {
+    flex-wrap: wrap;
+  }
+  .inputBox {
+    width: calc(100% - 10px);
+    margin: 0px 5px;
+    margin-bottom: 15px;
   }
 }

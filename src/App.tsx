@@ -7,8 +7,17 @@ import { ICustomCompView, ICustomField } from "./interfaces";
 import Loader from "./components/Loader";
 import ViewTree from "./ViewTree";
 import { parse, stringify, toJSON, fromJSON } from "flatted";
-import { ToastContainer, Slide, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Slide, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Switch from "@mui/material/Switch";
+
+const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const configJson: any = (window.parent.window as any)["customConfig"] || {};
 
@@ -235,29 +244,28 @@ const App: FC<IProps> = ({ uid }) => {
     }
   };
 
-  const createTree = (comp: ViewTree,arr: any) => {
+  const createTree = (comp: ViewTree, arr: any) => {
     // console.log('comp',comp);
-    
+
     comp.children &&
       comp.children.map((item: ViewTree) => {
         if (item.SelFields && item.SelFields?.length > 0) {
-          console.log('item.SelFields',item.SelFields);
-          
+          console.log("item.SelFields", item.SelFields);
+
           item.SelFields.forEach((item) => {
             arr.push(item);
           });
         }
-        createTree(item,arr);
+        createTree(item, arr);
       });
-
   };
 
   const formatViewData = (data: any) => {
     let updatedData: any = [];
     data.forEach((item: any) => {
       if (item.Tree) {
-        let fields :any= [];
-        createTree(parse(item.Tree),fields);
+        let fields: any = [];
+        createTree(parse(item.Tree), fields);
         updatedData.push({
           Name: item.Name,
           Fields: fields,
@@ -290,7 +298,7 @@ const App: FC<IProps> = ({ uid }) => {
             setData(compList.Success);
             setLoading(false);
           } else {
-            toast.error('Something went wrong!');
+            toast.error("Something went wrong!");
           }
         })
         .catch((error) => {
@@ -311,11 +319,11 @@ const App: FC<IProps> = ({ uid }) => {
             let data = compList.Success;
             let updatedData = formatViewData(data);
             // console.log('updatedData',updatedData);
-            
+
             setData(updatedData);
             setLoading(false);
           } else {
-            toast.error('Something went wrong!');
+            toast.error("Something went wrong!");
           }
         })
         .catch((error) => {
@@ -335,31 +343,35 @@ const App: FC<IProps> = ({ uid }) => {
     }
   }, [isCompSelected]);
 
-  console.log('component',component);
-  
+  console.log("component", component);
 
   return (
     <>
       <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            // pauseOnHover
-            transition={Slide}
-            theme={"colored"}
-        />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        // pauseOnHover
+        transition={Slide}
+        theme={"colored"}
+      />
       {loading ? <Loader /> : null}
-      <div className={styles.inputBox_Button}>
+      <div className={styles.input_wrap}>
         <div className={styles.inputBox}>
           <div className={styles.lbl}>Select Component/View</div>
-          <div className={styles.act_btn}>
+          <FormControl style={{ marginTop: "5px" }}>
+            <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue="Component" name="radio-buttons-group">
+              <FormControlLabel value="female" control={<Radio size="small" />} label="Component" style={{ marginRight: "50px" }} />
+              <FormControlLabel value="male" control={<Radio size="small" />} label="View" />
+            </RadioGroup>
+          </FormControl>
+          <div className={styles.act_btn} style={{ display: "none" }}>
             <div className={styles.act_row}>
-              <div className={styles.inputBox}> Component</div>
               <input
                 type="radio"
                 name="selectComp"
@@ -367,10 +379,11 @@ const App: FC<IProps> = ({ uid }) => {
                 onChange={handleChangeOption}
                 checked={isCompSelected === "component" ? true : false}
               />
+              <div className={styles.inputBox}> Component</div>
             </div>
             <div className={styles.act_row}>
-              <div className={`${styles.inputBox} ${styles.align}`}> View</div>
               <input type="radio" name="selectComp" value={"view"} onChange={handleChangeOption} checked={isCompSelected === "view" ? true : false} />
+              <div className={`${styles.inputBox} ${styles.align}`}> View</div>
             </div>
           </div>
         </div>
@@ -415,12 +428,7 @@ const App: FC<IProps> = ({ uid }) => {
                       <div className={`${tableStyle.type} `}>{item.Name}</div>
                     </div>
                     <div className={`${tableStyle.types} ${tableStyle.col_02} `}>
-                      <input
-                        type="text"
-                        name="Alias"
-                        value={item.Alias ? item.Alias : ""}
-                        onChange={(event) => onChangeAlias(event, item, index)}
-                      />
+                      <input type="text" name="Alias" value={item.Alias ? item.Alias : ""} onChange={(event) => onChangeAlias(event, item, index)} />
                     </div>
                     {/* <div className={`${tableStyle.types} ${tableStyle.col_03} `}>---table name---</div> */}
                     <div className={`${tableStyle.typess} ${tableStyle.col_04} `}>
@@ -445,7 +453,14 @@ const App: FC<IProps> = ({ uid }) => {
                       {displayInputType(item, index)}
                     </div>
                     <div className={`${tableStyle.endtype} ${tableStyle.col_05} `}>
-                      <input type="checkbox" checked={item.IsDisplay} onChange={(event) => onChnageIsDisplay(event, item, index)} />
+                      {/* <input type="checkbox" checked={item.IsDisplay} onChange={(event) => onChnageIsDisplay(event, item, index)} /> */}
+                      <Switch
+                        {...label}
+                        defaultChecked
+                        size="small"
+                        checked={item.IsDisplay}
+                        onChange={(event) => onChnageIsDisplay(event, item, index)}
+                      />
                     </div>
                   </div>
                 );
