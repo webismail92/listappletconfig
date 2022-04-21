@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-family: "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -9,8 +8,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .nice_scroll {
@@ -29,14 +27,15 @@ code {
   background: #222;
 }
 
-/*--------------- Global Styles  --------------------*/
+/*--------------- Global Styles  -------------------------*/
 
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: #f7f7f7;
-  background-image: url(https://tpointdevstorage.blob.core.windows.net/basedevpubliccontainer/1644920836744.svg);
+  background-color: #fff;
+  /* background-image: url(https://tpointdevstorage.blob.core.windows.net/basedevpubliccontainer/1644920836744.svg); */
+  background-image: url(https://tpointdevstorage.blob.core.windows.net/basedevpubliccontainer/1650464187244.svg);
   background-repeat: no-repeat;
   background-position: center right 10px;
 }
@@ -153,6 +152,9 @@ p {
   margin-top: -4px;
 }
 /*--------------- Matetial UI Css Overrides  --------------------*/
+.MuiRadio-root {
+  padding: 5px !important;
+}
 
 .MuiFormControlLabel-label {
   font-size: 14px !important;

@@ -12,6 +12,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ArrowDown from "./icons/ArrowDown";
 import ArrowUp from "./icons/ArrowUp";
 
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Switch from "@mui/material/Switch";
+
+const label = { inputProps: { "aria-label": "Switch demo" } };
+
 let configJson: any = (window.parent.window as any)["customConfig"] || {};
 
 interface IProps {}
@@ -47,7 +56,7 @@ const App: FC<IProps> = () => {
   const [config, setConfig] = useState<ICustomCompView | undefined>();
   const [data, setData] = useState<ICustomCompView[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isCompSelected, setIsCompSelected] = useState("component");
+  const [isCompSelected, setIsCompSelected] = useState("");
   const [selected, setSelected] = useState("");
   const [isExpandTable, setIsExpandTable] = useState(false);
 
@@ -59,7 +68,7 @@ const App: FC<IProps> = () => {
     let config = (window.parent.window as any)["customConfig"];
     if (config) {
       config = JSON.parse(config);
-      console.log('config',config);
+      console.log("config", config);
       if (typeof config === "object") {
         let customComp: ICustomCompView = {
           // _id: config._id,
@@ -68,7 +77,7 @@ const App: FC<IProps> = () => {
           Fields: [...config.Fields],
           Option: config.Option,
         };
-        configJson = Object.assign({},customComp);
+        configJson = Object.assign({}, customComp);
         setConfig(customComp);
         setIsCompSelected(config.Option);
         setSelected(config.Name);
@@ -83,33 +92,33 @@ const App: FC<IProps> = () => {
   const onChangeComponent = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     // if (value !== "") {
-      let item = data[+value];
-      let customField: ICustomField[] = [];
-      if (item.Fields && item.Fields.length > 0) {
-        item.Fields.forEach((item) => {
-          customField.push({
-            // _id: item._id,
-            Name: item.Name,
-            Alias: item.Alias,
-            IsDisplay: true,
-            Value: null,
-            Operator: "",
-            Type: "",
-          });
+    let item = data[+value];
+    let customField: ICustomField[] = [];
+    if (item.Fields && item.Fields.length > 0) {
+      item.Fields.forEach((item) => {
+        customField.push({
+          // _id: item._id,
+          Name: item.Name,
+          Alias: item.Alias,
+          IsDisplay: true,
+          Value: null,
+          Operator: "",
+          Type: "",
         });
-      }
-      let customComp: ICustomCompView = {
-        // _id: item._id,
-        Name: item.Name,
-        Option: isCompSelected,
-        // DbProvider: item.DbProvider,
-        Fields: customField,
-      };
-      // console.log("customComp", customComp);
+      });
+    }
+    let customComp: ICustomCompView = {
+      // _id: item._id,
+      Name: item.Name,
+      Option: isCompSelected,
+      // DbProvider: item.DbProvider,
+      Fields: customField,
+    };
+    // console.log("customComp", customComp);
 
-      setConfig(customComp);
-      setSelected(value);
-      configJson = Object.assign({},customComp);
+    setConfig(customComp);
+    setSelected(value);
+    configJson = Object.assign({}, customComp);
     // } else {
     //   setConfig(undefined);
     //   setSelected("");
@@ -118,19 +127,19 @@ const App: FC<IProps> = () => {
 
   const onChangeAlias = (event: React.ChangeEvent<HTMLInputElement>, customField: ICustomField, index: number) => {
     const { value } = event.target;
-    
+
     // if (value !== "") {
-      let cf: ICustomField = customField;
-      cf.Alias = value;
-      if (config) {
-        let comp: ICustomCompView = { ...config };
-        if (comp.Fields) {
-          comp.Fields[index] = cf;
-        }
-        setConfig(comp);
-        // Object.assign(configJson, comp);
-        configJson = Object.assign({},comp);
+    let cf: ICustomField = customField;
+    cf.Alias = value;
+    if (config) {
+      let comp: ICustomCompView = { ...config };
+      if (comp.Fields) {
+        comp.Fields[index] = cf;
       }
+      setConfig(comp);
+      // Object.assign(configJson, comp);
+      configJson = Object.assign({}, comp);
+    }
     // }
   };
 
@@ -146,7 +155,7 @@ const App: FC<IProps> = () => {
       }
       setConfig(comp);
       // Object.assign(configJson, comp);
-      configJson = Object.assign({},comp);
+      configJson = Object.assign({}, comp);
       // console.log("configJson", configJson);
     }
   };
@@ -165,17 +174,17 @@ const App: FC<IProps> = () => {
   ) => {
     const { value } = e.target;
     // if (value !== "") {
-      let cf: ICustomField = customField;
-      cf.Value = value;
-      if (config) {
-        let comp: ICustomCompView = { ...config };
-        if (comp.Fields) {
-          comp.Fields[index] = cf;
-        }
-        setConfig(comp);
-        // Object.assign(configJson, comp);
-        configJson = Object.assign({},comp);
+    let cf: ICustomField = customField;
+    cf.Value = value;
+    if (config) {
+      let comp: ICustomCompView = { ...config };
+      if (comp.Fields) {
+        comp.Fields[index] = cf;
       }
+      setConfig(comp);
+      // Object.assign(configJson, comp);
+      configJson = Object.assign({}, comp);
+    }
     // }
   };
 
@@ -228,7 +237,7 @@ const App: FC<IProps> = () => {
         }
         setConfig(comp);
         // Object.assign(configJson, comp);
-        configJson = Object.assign({},comp);
+        configJson = Object.assign({}, comp);
       }
     }
   };
@@ -245,7 +254,7 @@ const App: FC<IProps> = () => {
         }
         setConfig(comp);
         // Object.assign(configJson, comp);
-        configJson = Object.assign({},comp);
+        configJson = Object.assign({}, comp);
       }
     }
   };
@@ -338,15 +347,24 @@ const App: FC<IProps> = () => {
         });
     };
 
-    if (isCompSelected === "component") {
-      setLoading(true);
-      getCompList();
-      // console.log("comp");
-    } else {
-      setLoading(true);
-      getViewList();
-      // console.log("view");
+    switch (isCompSelected) {
+      case "component":
+        setLoading(true);
+        getCompList();
+        break;
+
+      case "view":
+        setLoading(true);
+        getViewList();
+        break;
+
+      default:
+        // setLoading(true);
+        // getCompList();
+        // setIsCompSelected("component")
+        break;
     }
+
   }, [isCompSelected]);
 
   console.log("config", config);
@@ -367,8 +385,41 @@ const App: FC<IProps> = () => {
         theme={"colored"}
       />
       {loading ? <Loader /> : null}
-      <div className={styles.inputBox_Button}>
+      <div className={styles.input_wrap}>
         <div className={styles.inputBox}>
+          <div className={styles.lbl}>Select Component/View</div>
+          <FormControl style={{ marginTop: "5px" }}>
+            <RadioGroup
+              row
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="Component"
+              name="radio-buttons-group"
+              value={isCompSelected}
+              onChange={handleChangeOption}
+            >
+              <FormControlLabel value="component" control={<Radio size="small" />} label="Component" style={{ marginRight: "50px" }} />
+              <FormControlLabel value="view" control={<Radio size="small" />} label="View" />
+            </RadioGroup>
+          </FormControl>
+          <div className={styles.act_btn} style={{ display: "none" }}>
+            <div className={styles.act_row}>
+              <input
+                type="radio"
+                name="selectComp"
+                value={"component"}
+                onChange={handleChangeOption}
+                checked={isCompSelected === "component" ? true : false}
+              />
+              <div className={styles.inputBox}> Component</div>
+            </div>
+            <div className={styles.act_row}>
+              <input type="radio" name="selectComp" value={"view"} onChange={handleChangeOption} checked={isCompSelected === "view" ? true : false} />
+              <div className={`${styles.inputBox} ${styles.align}`}> View</div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.inputBox} style={{ display: "none" }}>
           <div className={styles.lbl}>Select Component/View</div>
           <div className={styles.act_btn}>
             <div className={styles.act_row}>
@@ -456,6 +507,13 @@ const App: FC<IProps> = () => {
                       {displayInputType(item, index)}
                     </div>
                     <div className={`${tableStyle.endtype} ${tableStyle.col_05} `}>
+                      {/* <Switch
+                        {...label}
+                        defaultChecked
+                        size="small"
+                        checked={item.IsDisplay}
+                        onChange={(event) => onChnageIsDisplay(event, item, index)}
+                      /> */}
                       <input type="checkbox" checked={item.IsDisplay} onChange={(event) => onChnageIsDisplay(event, item, index)} />
                     </div>
                   </div>
